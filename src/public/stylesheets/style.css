@@ -1,8 +1,15 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+#map {
+  height: calc(60vh - 3.5rem);
+}
+#describe {
+  height: calc(40vh);
 }
 
-a {
-  color: #00B7FF;
+@media (min-width: 768px) { 
+  #map {
+    height: calc(100vh - 3.5rem);
+  }
+  #describe {
+    height: calc(100vh - 3.5rem);
+  }
 }

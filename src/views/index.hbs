@@ -1,2 +1,158 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+
+        <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/themes/light/main.css">
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <div class="row">
+
+          <div class="col-12 col-md-8 p-2" id="map"></div>
+          <div class="col-12 col-md-4 p-2 overflow-auto" id="describe">
+
+            <nav class="navbar navbar-light bg-light">
+              <a class="navbar-brand">Registo</a>
+                <!-- Button trigger modal registro plantación-->
+                <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#modalRegPlt">
+                  Plantación
+                </button>
+                <!-- Button trigger modal registro plantación-->
+                <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#modalSgm">
+                  Seguimiento
+                </button>
+            </nav>
+
+            <nav class="navbar navbar-light bg-light">
+              <a class="navbar-brand">Plantación</a>
+                <form id="bsq">
+                  <div class="form-row">
+                    <div class="col">
+                      <input type="text" class="form-control" placeholder="Identificador" name="id">
+                    </div>
+                    <div class="col">
+                      <button type="button" class="btn btn-outline-info btn-block" id="btnbsq" >
+                        Buscar
+                      </button>
+                    </div>
+                  </div>
+                </form>
+            </nav>
+
+            <!-- Modal registro plantación -->
+            <div class="modal fade" id="modalRegPlt" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Plantación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="plt">
+                      <div class="form-group">
+                        <label for="identplt">Identificador</label>
+                        <input type="text" class="form-control" id="identplt" name="id">
+                      </div>
+                      <div class="form-group">
+                        <label for="descplt">Descripción</label>
+                        <textarea class="form-control" id="descplt" rows="3" name="descripcion"></textarea>
+                      </div>
+                      <div class="group">
+                        <label for="stdplt">Estado</label>
+                        <select class="custom-select" id="stdplt" name="estado">
+                          <option>SIEMBRA</option>
+                          <option>EMERGENCIA</option>
+                          <option>DESARROLLO VEGETATIVO</option>
+                          <option>FLORACION</option>
+                          <option>MADURACION</option>
+                          <option>COSECHA</option>
+                        </select>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnplt">Registrar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal registro seguimiento -->
+            <div class="modal fade" id="modalSgm" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Seguimiento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="sgm">
+                      <div class="form-group">
+                        <label for="identsgm">Identificador plantación</label>
+                        <input type="text" class="form-control" id="identsgm" name="id">
+                      </div>
+                      <div class="form-group">
+                        <label for="fechasgm">Fecha</label>
+                        <input type="date" class="form-control" id="fechasgm" name="fecha">
+                      </div>
+                      <div class="form-group">
+                        <label for="descsgm">Descripción</label>
+                        <textarea class="form-control" id="descsgm" rows="3" name="descripcion"></textarea>
+                      </div>
+                      <div class="form-group">
+                        <label for='imgsgm'>Imagen</label> 
+                        <input type='file' id='imgsgm' name='img' class='form-control-file'>
+                      </div>
+                      <div class="form-group">
+                        <label for="stdsgm">Estado</label>
+                        <select class="custom-select" id="stdsgm" name="estado">
+                          <option>SIEMBRA</option>
+                          <option>EMERGENCIA</option>
+                          <option>DESARROLLO VEGETATIVO</option>
+                          <option>FLORACION</option>
+                          <option>MADURACION</option>
+                          <option>COSECHA</option>
+                        </select>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnsgm">Registrar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="resultbsq">
+
+              {{!-- <div class="card my-2">
+                <div class="card-body">
+                  <h5 class="card-title">A1</h5>
+                  <h6 class="card-subtitle mb-2 text-muted" id="std">SIEMBRA</h6>
+                  <p class="card-text">Plantación de papa.</p>
+                  <p class="card-text text-right">
+                    <button type="button" class="btn btn-secondary">Bomba Agua</button>
+                    <button type="button" class="btn btn-success">Ventilador</button>
+                  </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item" id="log">
+                    <p class="card-text">22/08/20	Se sembró la papa.</p> 
+                  </li>
+                </ul>
+              </div> --}}
+
+            </div>
+
+          </div>
+
+        </div>
+        {{> scripts}}
+
+        <script src="https://js.arcgis.com/4.16/"></script>
+        <script src="/scripts/registroPlantacion.js"></script>
+        <script src="/scripts/registroSeguimiento.js"></script>
+        <script src="/scripts/cargaMapa.js"></script>
+        <script src="/scripts/buscarPlantacion.js"></script>
+

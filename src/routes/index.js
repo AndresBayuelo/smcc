@@ -1,9 +1,15 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const controller = require('../controllers/index'); 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/', controller.view );
+router.post('/registro_plantacion', controller.registrarPlantacion );
+router.post('/registro_sgmoperativo', controller.registrarSgmOperativo );
+router.post('/registro_sgmoperacional', controller.registrarSgmOperacional );
+router.post('/actualizar_ip', controller.actualizarIp );
+router.post('/actualizar_loc', controller.actualizarLoc );
+router.get('/obtener_plantaciones', controller.obtenerPlantaciones );
+router.get('/obtener_plantacion', controller.obtenerPlantacion );
 
 module.exports = router;
